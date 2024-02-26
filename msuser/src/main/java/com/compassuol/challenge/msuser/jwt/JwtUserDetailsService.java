@@ -1,6 +1,6 @@
 package com.compassuol.challenge.msuser.jwt;
 
-import com.compassuol.challenge.msuser.application.UserService;
+import com.compassuol.challenge.msuser.application.service.UserService;
 import com.compassuol.challenge.msuser.domain.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
