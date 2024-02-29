@@ -1,9 +1,6 @@
 package com.compassuol.challenge.msuser.application.dto.mapper;
 
-import com.compassuol.challenge.msuser.application.dto.UserCreateDto;
-import com.compassuol.challenge.msuser.application.dto.UserLoginDto;
-import com.compassuol.challenge.msuser.application.dto.UserResponseDto;
-import com.compassuol.challenge.msuser.application.dto.UserUpdatePasswordDto;
+import com.compassuol.challenge.msuser.application.dto.*;
 import com.compassuol.challenge.msuser.domain.Usuario;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,14 @@ public class UserMapper {
     }
     public  static UserUpdatePasswordDto toUserUpdatePasswordDto(Usuario user){
         return new ModelMapper().map(user, UserUpdatePasswordDto.class);
+    }
+
+    public  static DataNotification toDataNotification(Usuario user){
+        return new ModelMapper().map(user, DataNotification.class);
+    }
+
+    public  static Usuario toUser(UserLoginDto userLoginDto){
+        return new ModelMapper().map(userLoginDto, Usuario.class);
     }
 
     public static UserLoginDto toUserLoginDto(Usuario user){
