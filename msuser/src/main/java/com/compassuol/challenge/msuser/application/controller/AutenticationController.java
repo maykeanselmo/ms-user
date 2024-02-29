@@ -1,9 +1,15 @@
 package com.compassuol.challenge.msuser.application.controller;
 
+import com.compassuol.challenge.msuser.application.dto.DataNotification;
 import com.compassuol.challenge.msuser.application.dto.UserLoginDto;
+import com.compassuol.challenge.msuser.application.dto.mapper.UserMapper;
+import com.compassuol.challenge.msuser.application.enums.Event;
+import com.compassuol.challenge.msuser.application.exceptions.ErrorNotificationException;
 import com.compassuol.challenge.msuser.application.exceptions.handler.ErrorMessage;
+import com.compassuol.challenge.msuser.infra.mqueue.NotificationPublisher;
 import com.compassuol.challenge.msuser.jwt.JwtToken;
 import com.compassuol.challenge.msuser.jwt.JwtUserDetailsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AutenticationController {
     private final JwtUserDetailsService detailsService;
     private final AuthenticationManager authenticationManager;
+    private final NotificationPublisher notificationPublisher;
 
     @Operation(summary = "Autenticar na API", description = "Recurso de autenticação na API",
             responses = {
@@ -52,11 +59,17 @@ public class AutenticationController {
             authenticationManager.authenticate(authenticationToken);
 
             JwtToken token = detailsService.getTokenAuthenticated(dto.getEmail());
+            DataNotification data = notificationPublisher.createDataNotification(UserMapper.toUser(dto), Event.LOGIN);
+            notificationPublisher.publishNotification(data);
+            log.info("Login efetuado com sucesso");
 
 
             return ResponseEntity.ok(token);
         } catch (AuthenticationException ex) {
             log.warn("Bad Credentials from username '{}'", dto.getEmail());
+        }
+        catch (JsonProcessingException e) {
+            throw new ErrorNotificationException("Erro ao processar a notificação");
         }
         return ResponseEntity
                 .badRequest()
