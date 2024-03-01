@@ -86,5 +86,9 @@ Inicialmente, planejei estabelecer a comunicação entre os serviços por meio d
 
 Essas adversidades foram oportunidades valiosas de aprendizado, ressaltando a importância de uma abordagem flexível diante dos desafios e da necessidade de adaptação durante o processo de desenvolvimento. A reflexão e a capacidade de ajustar estratégias foram cruciais para garantir a entrega funcional do projeto. É importante ressaltar que esses desafios também contribuíram para a falta de validação, tratamento de exceções e testes no microserviço de endereço, bem como para a decisão de manter o banco de dados como SQL, em vez de migrá-lo para a AWS.
 
+## Melhorias
+
+Para aprimorar ainda mais o projeto, é essencial concluir os testes unitários e implementar as validações necessárias, especialmente no microserviço de endereço. Além disso, visando uma arquitetura de microserviços mais robusta e escalável, podemos considerar a implementação de um Discovery Server para servir como repositório das instâncias dos microserviços. Isso facilitaria a descoberta e comunicação entre os serviços de forma mais dinâmica. Adicionalmente, a introdução de um Gateway proporcionaria uma distribuição balanceada das requisições entre os microserviços, promovendo uma arquitetura mais resiliente e eficiente. Essas melhorias não apenas fortaleceriam a estrutura do projeto, mas também contribuiriam significativamente para sua escalabilidade e manutenibilidade a longo prazo.
+
 
 
