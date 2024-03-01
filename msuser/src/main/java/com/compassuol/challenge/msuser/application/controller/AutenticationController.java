@@ -66,7 +66,7 @@ public class AutenticationController {
 
             return ResponseEntity.ok(token);
         } catch (AuthenticationException ex) {
-            log.warn("Bad Credentials from username '{}'", dto.getEmail());
+            log.warn("Credênciais inváldias do usuário '{}'", dto.getEmail());
         }
         catch (JsonProcessingException e) {
             throw new ErrorNotificationException("Erro ao processar a notificação");

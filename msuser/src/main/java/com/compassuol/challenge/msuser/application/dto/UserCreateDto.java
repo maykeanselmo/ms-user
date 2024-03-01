@@ -5,9 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,6 +13,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
 public class UserCreateDto {
     @NotEmpty
@@ -50,4 +50,6 @@ public class UserCreateDto {
     public boolean getActive() {
         return active;
     }
+
+
 }

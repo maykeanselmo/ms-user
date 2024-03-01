@@ -18,11 +18,14 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Builder
 @Table(name = "user")
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "address_id")
+    private Long addressId;
     @NotEmpty
     @Column(name = "first_name", nullable = false)
     @Size(min = 3)

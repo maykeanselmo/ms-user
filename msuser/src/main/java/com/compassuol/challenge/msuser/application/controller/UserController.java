@@ -1,8 +1,7 @@
 package com.compassuol.challenge.msuser.application.controller;
 
-import com.compassuol.challenge.msuser.application.dto.UserCreateDto;
-import com.compassuol.challenge.msuser.application.dto.UserResponseDto;
-import com.compassuol.challenge.msuser.application.dto.UserUpdatePasswordDto;
+import com.compassuol.challenge.msuser.application.cosumer.AddressConsumerFeign;
+import com.compassuol.challenge.msuser.application.dto.*;
 import com.compassuol.challenge.msuser.application.dto.mapper.UserMapper;
 import com.compassuol.challenge.msuser.application.exceptions.handler.ErrorMessage;
 import com.compassuol.challenge.msuser.application.service.UserService;
@@ -16,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1")
+@Slf4j
 public class UserController {
     private final UserService userService;
+    private final AddressConsumerFeign addressConsumerFeign;
 
     @Operation(summary = "Criar um novo usuário.", description = "Recurso para criar um novo usuário.",
             responses = {
@@ -65,9 +67,13 @@ public class UserController {
             }
     )
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserAddressResponseDto> getUserById(@PathVariable("id") Long id) {
         Usuario user = userService.getUserById(id);
-        return ResponseEntity.ok(UserMapper.toDto(user));
+        log.info("Usuario encontrado com sucesso");
+        AddressResponseDto addressResponseDto = addressConsumerFeign.getAddressById(user.getAddressId()).getBody();
+        log.info("Endereço encontrado com sucesso");
+        UserResponseDto userResponseDto = UserMapper.toDto(user);
+        return ResponseEntity.ok(UserMapper.toUserAddressResponseDto(userResponseDto,addressResponseDto));
     }
 
     @Operation(summary = "Atualizar um usuário existente.", description = "Recurso para atualizar as informações de um usuário existente através do Id.",

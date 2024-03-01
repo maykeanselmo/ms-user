@@ -1,9 +1,7 @@
 package com.compassuol.challenge.msuser.application.service;
 
-import com.compassuol.challenge.msuser.application.dto.DataNotification;
-import com.compassuol.challenge.msuser.application.dto.UserCreateDto;
-import com.compassuol.challenge.msuser.application.dto.UserLoginDto;
-import com.compassuol.challenge.msuser.application.dto.UserUpdatePasswordDto;
+import com.compassuol.challenge.msuser.application.cosumer.AddressConsumerFeign;
+import com.compassuol.challenge.msuser.application.dto.*;
 import com.compassuol.challenge.msuser.application.enums.Event;
 import com.compassuol.challenge.msuser.application.exceptions.ErrorNotificationException;
 import com.compassuol.challenge.msuser.application.exceptions.IncorrectPasswordExcpetion;
@@ -27,16 +25,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final NotificationPublisher notificationPublisher;
+    private final AddressConsumerFeign addressConsumerFeign;
 
 
     public Usuario createUser(Usuario user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            log.info("Salvando usuário");
+
+            IdDto idDto = addressConsumerFeign.createAddress(user.getCep()).getBody();
+            user.setAddressId(idDto.getId());
+            log.info("Endereço criado");
             Usuario userCreated = userRepository.save(user);
+            log.info("Usuário salvo");
             DataNotification data = notificationPublisher.createDataNotification(userCreated, Event.CREATE);
             notificationPublisher.publishNotification(data);
-            log.info("Mensaggem enviada");
+            log.info("Mensagem para ms-notification enviada.");
             return userCreated;
         } catch (DataIntegrityViolationException e) {
             throw new UniqueUserViolationException("Já existe um usuário cadastrado com esse email ou cpf.");
@@ -55,7 +58,6 @@ public class UserService {
         );
     }
 
-    @Transactional
     public Usuario updateUser(Long id, UserCreateDto dto) {
         try {
             Usuario existingUser = getUserById(id);
@@ -68,6 +70,8 @@ public class UserService {
             existingUser.setActive(dto.getActive());
             DataNotification data = notificationPublisher.createDataNotification(existingUser, Event.UPDATE);
             notificationPublisher.publishNotification(data);
+            log.info("Mensagem para ms-notification enviada");
+
 
             return userRepository.save(existingUser);
         } catch (JsonProcessingException e) {
@@ -76,7 +80,7 @@ public class UserService {
 
     }
 
-    @Transactional
+
     public Usuario updatePassword(Long id, String currentPassword, UserUpdatePasswordDto updatedPassword) {
         try {
             Usuario existingUser = getUserById(id);
@@ -93,28 +97,17 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public Usuario login(UserLoginDto dto) {
-
-        Usuario user = userRepository.findByEmail(dto.getEmail());
-
-        if (user == null) {
-            throw new EntityNotFoundException("Usuário não encontrado");
-        }
-        if (!user.getPassword().equals(dto.getPassword())) {
-            throw new IncorrectPasswordExcpetion("Senha incorreta.");
-        }
-        return user;
-    }
-
     @Transactional(readOnly = true)
     public Usuario getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+
+            Usuario user=  userRepository.findByEmail(email);
+            if(user == null){
+                throw new EntityNotFoundException("Nenhum usuário foi encontrado com o e-mail: " + email);
+            }
+            else{
+                return user;
+            }
+
     }
 
-    @Transactional(readOnly = true)
-    public Usuario findByCpf(String cpf) {
-        return userRepository.findByCpf(cpf);
-
-    }
 }

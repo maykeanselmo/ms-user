@@ -31,7 +31,8 @@ public class SpringSecurityConfig {
             "/**.html",
             "/webjars/**",
             "/configuration/**",
-            "/swagger-resources/**"
+            "/swagger-resources/**",
+            "/queue/notifications"
     };
 
     @Bean
