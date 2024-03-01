@@ -6,7 +6,6 @@ O projeto concentra-se no desenvolvimento de um microserviço voltado para o ger
 Utilizando o Java JDK na versão 17, o projeto integrou-se com outros dois microserviços: o Microserviço de Notificação e o Microserviço de Endereço. Ao cadastrar, atualizar ou realizar login de um usuário, uma mensagem é enviada via RabbitMQ para o microserviço de notificação, o qual armazena o evento ocorrido em um banco de dados separado. Quando um usuário é cadastrado, uma mensagem contendo seu CEP é enviada ao microserviço de endereço, que, seguindo a regra de negócio, consome ou não a API ViaCep e armazena o endereço encontrado em seu próprio banco de dados.
 
 Para testar as implementações, inicialmente utilizamos o aplicativo Postman. Posteriormente, foram implementados testes unitários com JUnit 5 e Mockito. No entanto, esses testes foram apenas parcialmente implementados devido a imprevistos no projeto, impactando a cobertura esperada.
-|
 
 ## Tecnologias utilizadas
 - Java JDK 17
@@ -45,6 +44,7 @@ Para testar as implementações, inicialmente utilizamos o aplicativo Postman. P
 - **PUT - /v1/users/:id:** Endpoint para atualizar os dados de um usuário específico.
 - **PUT - /v1/users/:id/password:** Endpoint para alterar a senha de um usuário específico.
 
+Collections do postman: https://api.postman.com/collections/32204854-d2de2fd3-dc2f-455a-82c1-4f35f3f2eed1?access_key=PMAT-01HQXWXXYNP7ST78EZT97B73RP
 
 ### Exemplo de Payload para Cadastro de Usuário
 
@@ -89,6 +89,7 @@ Essas adversidades foram oportunidades valiosas de aprendizado, ressaltando a im
 ## Melhorias
 
 Para aprimorar ainda mais o projeto, é essencial concluir os testes unitários e implementar as validações necessárias, especialmente no microserviço de endereço. Além disso, visando uma arquitetura de microserviços mais robusta e escalável, podemos considerar a implementação de um Discovery Server para servir como repositório das instâncias dos microserviços. Isso facilitaria a descoberta e comunicação entre os serviços de forma mais dinâmica. Adicionalmente, a introdução de um Gateway proporcionaria uma distribuição balanceada das requisições entre os microserviços, promovendo uma arquitetura mais resiliente e eficiente. Essas melhorias não apenas fortaleceriam a estrutura do projeto, mas também contribuiriam significativamente para sua escalabilidade e manutenibilidade a longo prazo.
+
 
 
 
