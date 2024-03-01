@@ -27,7 +27,17 @@ public class UserMapper {
         return new ModelMapper().map(userLoginDto, Usuario.class);
     }
 
+    public  static CepDto toCepDto(Usuario usuario){
+        return new ModelMapper().map(usuario, CepDto.class);
+    }
+
     public static UserLoginDto toUserLoginDto(Usuario user){
         return new ModelMapper().map(user, UserLoginDto.class);
+    }
+    public static UserAddressResponseDto toUserAddressResponseDto(UserResponseDto user, AddressResponseDto address) {
+        UserAddressResponseDto dto = new UserAddressResponseDto();
+        dto.setUserResponseDto(user);
+        dto.setAddress(address);
+        return dto;
     }
 }
