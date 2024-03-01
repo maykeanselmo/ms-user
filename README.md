@@ -84,7 +84,7 @@ Durante o desenvolvimento do projeto, enfrentei desafios significativos, especia
 
 Inicialmente, planejei estabelecer a comunicação entre os serviços por meio de mensageria. Contudo, após uma cuidadosa análise e discussões, concluí que a abordagem assíncrona entre os microserviços de usuário e endereço poderia não ser a mais eficiente. Diante disso, optei por uma mudança estratégica para uma comunicação síncrona, aproveitando a tecnologia OpenFeign. Essa decisão não apenas exigiu ajustes na arquitetura, mas também afetou a implementação dos outros microserviços, impactando a validação e o tratamento de exceções no microserviço de endereço.
 
-Essas adversidades foram oportunidades valiosas de aprendizado, ressaltando a importância de uma abordagem flexível diante dos desafios e da necessidade de adaptação durante o processo de desenvolvimento. A reflexão e a capacidade de ajustar estratégias foram cruciais para garantir a entrega funcional do projeto.
+Essas adversidades foram oportunidades valiosas de aprendizado, ressaltando a importância de uma abordagem flexível diante dos desafios e da necessidade de adaptação durante o processo de desenvolvimento. A reflexão e a capacidade de ajustar estratégias foram cruciais para garantir a entrega funcional do projeto. É importante ressaltar que esses desafios também contribuíram para a falta de validação, tratamento de exceções e testes no microserviço de endereço, bem como para a decisão de manter o banco de dados como SQL, em vez de migrá-lo para a AWS.
 
 
 
