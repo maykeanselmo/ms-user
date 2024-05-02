@@ -1,7 +1,7 @@
 # Microserviço de Usuário (ms-user)
 ## Visão Geral
 
-O projeto concentra-se no desenvolvimento de um microserviço voltado para o gerenciamento de usuários, aproveitando as tecnologias e conhecimentos adquiridos durante o programa de estágio da Compass UOL | Back-end Journey (Spring Boot) - AWS Cloud Context.
+O projeto concentra-se no desenvolvimento de um microsserviço voltado para o gerenciamento de usuários, aproveitando as tecnologias e conhecimentos adquiridos durante o programa de estágio da Compass UOL | Back-end Journey (Spring Boot) - AWS Cloud Context.
 
 Utilizando o Java JDK na versão 17, o projeto integrou-se com outros dois microserviços: o Microserviço de Notificação e o Microserviço de Endereço. Ao cadastrar, atualizar ou realizar login de um usuário, uma mensagem é enviada via RabbitMQ para o microserviço de notificação, o qual armazena o evento ocorrido em um banco de dados separado. Quando um usuário é cadastrado, uma mensagem contendo seu CEP é enviada ao microserviço de endereço, que, seguindo a regra de negócio, consome ou não a API ViaCep e armazena o endereço encontrado em seu próprio banco de dados.
 
