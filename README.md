@@ -1,4 +1,4 @@
-# Microserviço de Usuário (ms-user)
+# Microsserviço de Usuário (ms-user)
 ## Visão Geral
 
 O projeto concentra-se no desenvolvimento de um microsserviço voltado para o gerenciamento de usuários, aproveitando as tecnologias e conhecimentos adquiridos durante o programa de estágio da Compass UOL | Back-end Journey (Spring Boot) - AWS Cloud Context.
